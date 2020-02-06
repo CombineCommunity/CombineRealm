@@ -149,7 +149,7 @@ public enum RealmPublishers {
      
      - returns: `AnyPublisher<Output, Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<Results<Model>, Error>`, on a `List<User>` it will return `AnyPublisher<List<User>, Error>`, etc.
      */
-    static func collection<Output: NotificationEmitter>(from collection: Output,
+    public static func collection<Output: NotificationEmitter>(from collection: Output,
                                                         synchronousStart: Bool = true)
         -> AnyPublisher<Output, Error> {
             
@@ -187,7 +187,7 @@ public enum RealmPublishers {
      
      - returns: `AnyPublisher<Array<Output.ElementType>, Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<Array<Model>, Error>`, on a `List<User>` it will return `AnyPublisher<Array<User>, Error>`, etc.
      */
-    static func array<Output: NotificationEmitter>(from collection: Output,
+    public static func array<Output: NotificationEmitter>(from collection: Output,
                                                    synchronousStart: Bool = true)
         -> AnyPublisher<[Output.ElementType], Error> {
             
@@ -208,7 +208,7 @@ public enum RealmPublishers {
      
      - returns: `AnyPublisher<(Output, RealmChangeset?), Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<(Results<Model>, RealmChangeset?), Error>`, on a `List<User>` it will return `AnyPublisher<(List<User>, RealmChangeset?), Error>`, etc.
      */
-    static func changeset<Output: NotificationEmitter>(from collection: Output,
+    public static func changeset<Output: NotificationEmitter>(from collection: Output,
                                                        synchronousStart: Bool = true)
         -> AnyPublisher<(AnyRealmCollection<Output.ElementType>, RealmChangeset?), Error> {
             
@@ -247,7 +247,7 @@ public enum RealmPublishers {
      
      - returns: `AnyPublisher<(Array<Output.ElementType>, RealmChangeset?), Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<(Array<Model>, RealmChangeset?), Error>`, on a `List<User>` it will return `AnyPublisher<(Array<User>, RealmChangeset?), Error>`, etc.
      */
-    static func arrayWithChangeset<Output: NotificationEmitter>(from collection: Output,
+    public static func arrayWithChangeset<Output: NotificationEmitter>(from collection: Output,
                                                                 synchronousStart: Bool = true)
         -> AnyPublisher<([Output.ElementType], RealmChangeset?), Error> {
         
@@ -255,9 +255,6 @@ public enum RealmPublishers {
                 .map { ($0.toArray(), $1) }
                 .eraseToAnyPublisher()
     }
-}
-
-public extension Publishers {
     
     /**
      Returns an `AnyPublisher<(Realm, Realm.Notification), Error>` that emits each time the Realm emits a notification.
@@ -273,7 +270,7 @@ public extension Publishers {
      - parameter realm: A Realm instance
      - returns: `AnyPublisher<(Realm, Realm.Notification), Error>`, which you can subscribe to
      */
-    static func from(realm: Realm) -> AnyPublisher<(Realm, Realm.Notification), Error> {
+    public static func from(realm: Realm) -> AnyPublisher<(Realm, Realm.Notification), Error> {
         
         return RealmPublisher<(Realm, Realm.Notification), Error> { subscriber in
             return realm.observe { (notification: Realm.Notification, realm: Realm) in
@@ -282,13 +279,7 @@ public extension Publishers {
         }
         .eraseToAnyPublisher()
     }
-}
-
-
-// MARK: Realm Object type extensions
-
-public extension Publishers {
-    
+        
     /**
      Returns an `AnyPublisher<Object, Error>` that emits each time the object changes. The publisher emits an initial value upon subscription.
      
@@ -298,7 +289,7 @@ public extension Publishers {
      - returns: `AnyPublisher<Object, Error>` will emit any time the observed object changes + one initial emit upon subscription
      */
     
-    static func from<O: Object>(object: O,
+    public static func from<O: Object>(object: O,
                                 emitInitialValue: Bool = true,
                                 properties: [String]? = nil)
         -> AnyPublisher<O, Error> {
@@ -333,7 +324,7 @@ public extension Publishers {
      - returns: `AnyPublisher<PropertyChange, Error>` will emit any time a change is detected on the object
      */
     
-    static func propertyChanges<O: Object>(object: O) -> AnyPublisher<PropertyChange, Error> {
+    public static func propertyChanges<O: Object>(object: O) -> AnyPublisher<PropertyChange, Error> {
         
         return RealmPublisher<PropertyChange, Error> { subscriber in
             return object.observe { change in
