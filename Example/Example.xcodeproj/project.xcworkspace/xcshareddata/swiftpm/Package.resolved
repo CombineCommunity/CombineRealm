@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CombineRealm",
+        "repositoryURL": "https://github.com/istvan-kreisz/CombineRealm.git",
+        "state": {
+          "branch": null,
+          "revision": "563b6876b26e2b99e6a9ecd33c0c40119f22bdc7",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa.git",
+        "state": {
+          "branch": null,
+          "revision": "9743cb4afcb16f7297460f633ee939fc1a52355b",
+          "version": "4.3.1"
+        }
+      },
+      {
+        "package": "RealmCore",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "35662ff940e340bf630ad1d1d88acfc7af18bee6",
+          "version": "5.23.8"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
