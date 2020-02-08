@@ -15,14 +15,14 @@ class Add<Input, Failure: Error>: Subscriber, Cancellable {
         
     public let combineIdentifier = CombineIdentifier()
     
-    private let realm: Realm?
+    private let configuration: Realm.Configuration
     
     private let updatePolicy: Realm.UpdatePolicy
     private let onError: ((Swift.Error) -> Void)?
     private var subscription: Subscription?
     
-    init(realm: Realm?, updatePolicy: Realm.UpdatePolicy, onError: ((Swift.Error) -> Void)?) {
-        self.realm = realm
+    init(configuration: Realm.Configuration, updatePolicy: Realm.UpdatePolicy, onError: ((Swift.Error) -> Void)?) {
+        self.configuration = configuration
         self.updatePolicy = updatePolicy
         self.onError = onError
     }
@@ -34,10 +34,9 @@ class Add<Input, Failure: Error>: Subscriber, Cancellable {
     
     func receive(_ input: Input) -> Subscribers.Demand {
         do {
-            let realm = try self.realm ?? Realm()
-            try realm.write { [weak self] in
-                guard let self = self else { return }
-                self.addToRealm(realm, input: input, updatePolicy: self.updatePolicy)
+            let realm = try Realm(configuration: configuration)
+            try realm.write {
+                addToRealm(realm, input: input, updatePolicy: updatePolicy)
             }
         } catch let error {
             onError?(error)
@@ -79,29 +78,29 @@ public extension Publisher where Output: Object, Failure: Error {
      - returns: `AnyCancellable`
      */
     func addToRealm() -> AnyCancellable {
-        return addToRealm(nil)
+        return addToRealm(configuration: .defaultConfiguration)
     }
     
     /**
      Subscribes publisher to subscriber which adds objects to a Realm.
 
-     - parameter realm - realm instance which the objects will be added to (defaults to `Realm()` if not specified)
+     - parameter configuration (by default uses `Realm.Configuration.defaultConfiguration`) to use to get a Realm for the write operations
      - returns: `AnyCancellable`
      */
-    func addToRealm(_ realm: Realm) -> AnyCancellable {
-        return addToRealm(realm, updatePolicy: .error)
+    func addToRealm(configuration: Realm.Configuration = .defaultConfiguration) -> AnyCancellable {
+        return addToRealm(configuration: configuration, updatePolicy: .error)
     }
         
     /**
      Subscribes publisher to subscriber which adds objects to a Realm.
 
-     - parameter realm - realm instance which the objects will be added to (defaults to `Realm()` if not specified)
+     - parameter configuration (by default uses `Realm.Configuration.defaultConfiguration`) to use to get a Realm for the write operations
      - parameter updatePolicy - update according to `Realm.UpdatePolicy`
      - parameter onError - closure to implement custom error handling
-     - returns: `AnyCancellable` 
+     - returns: `AnyCancellable`
      */
-    func addToRealm(_ realm: Realm? = nil, updatePolicy: Realm.UpdatePolicy = .error, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
-        let subscriber = AddOne<Output, Failure>(realm: realm, updatePolicy: updatePolicy, onError: onError)
+    func addToRealm(configuration: Realm.Configuration = .defaultConfiguration, updatePolicy: Realm.UpdatePolicy = .error, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
+        let subscriber = AddOne<Output, Failure>(configuration: configuration, updatePolicy: updatePolicy, onError: onError)
         self.subscribe(subscriber)
         return AnyCancellable(subscriber)
     }
@@ -115,29 +114,29 @@ public extension Publisher where Output: Sequence, Failure: Error, Output.Iterat
      - returns: `AnyCancellable`
      */
     func addToRealm() -> AnyCancellable {
-        return addToRealm(nil)
+        return addToRealm(configuration: .defaultConfiguration)
     }
     
     /**
      Subscribes publisher to subscriber which adds objects in sequence to a Realm.
 
-     - parameter realm - realm instance which the objects will be added to (defaults to `Realm()` if not specified)
+     - parameter configuration (by default uses `Realm.Configuration.defaultConfiguration`) to use to get a Realm for the write operations
      - returns: `AnyCancellable`
      */
-    func addToRealm(_ realm: Realm) -> AnyCancellable {
-        return addToRealm(realm, updatePolicy: .error)
+    func addToRealm(configuration: Realm.Configuration = .defaultConfiguration) -> AnyCancellable {
+        return addToRealm(configuration: configuration, updatePolicy: .error)
     }
-    
+
     /**
      Subscribes publisher to subscriber which adds objects in sequence to a Realm.
 
-     - parameter realm - realm instance which the objects will be added to (defaults to `Realm()` if not specified)
+     - parameter configuration (by default uses `Realm.Configuration.defaultConfiguration`) to use to get a Realm for the write operations
      - parameter updatePolicy - update according to `Realm.UpdatePolicy`
      - parameter onError - closure to implement custom error handling
      - returns: `AnyCancellable`
      */
-    func addToRealm(_ realm: Realm?, updatePolicy: Realm.UpdatePolicy = .error, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
-        let subscriber = AddMany<Output, Failure>(realm: realm, updatePolicy: updatePolicy, onError: onError)
+    func addToRealm(configuration: Realm.Configuration = .defaultConfiguration, updatePolicy: Realm.UpdatePolicy = .error, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
+        let subscriber = AddMany<Output, Failure>(configuration: configuration, updatePolicy: updatePolicy, onError: onError)
         self.subscribe(subscriber)
         return AnyCancellable(subscriber)
     }

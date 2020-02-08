@@ -13,7 +13,7 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let realm = try! Realm()
+        let realm = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true))
         try! realm.write {
             realm.deleteAll()
         }

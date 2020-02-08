@@ -106,34 +106,45 @@ struct RealmPublisher<Output, Failure: Swift.Error>: Publisher {
     public typealias Failure = Failure
     
     private let handler: (AnySubscriber<Output, Failure>) -> NotificationToken
+    private let initialValue: Output?
     
-    init(handler: @escaping (AnySubscriber<Output, Failure>) -> NotificationToken) {
+    init(initialValue: Output? = nil, handler: @escaping (AnySubscriber<Output, Failure>) -> NotificationToken) {
         self.handler = handler
+        self.initialValue = initialValue
     }
     
     func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Failure, S.Input == Output {
-        subscriber.receive(subscription: RealmSubscription<Output, Failure>(subscriber: subscriber, handler: handler))
+        subscriber.receive(subscription: RealmSubscription<Output, Failure>(subscriber: subscriber, initialValue: initialValue, handler: handler))
     }
 }
     
 final class RealmSubscription<Output, Failure: Error>: Subscription {
     
     private var subscriber: AnySubscriber<Output, Failure>?
-    private let token: NotificationToken
+    private var token: NotificationToken?
+    private var handler: (AnySubscriber<Output, Failure>) -> NotificationToken
+    private var initialValue: Output?
     
-    init<S>(subscriber: S, handler: (AnySubscriber<Output, Failure>) -> NotificationToken)
+    init<S>(subscriber: S, initialValue: Output?, handler: @escaping (AnySubscriber<Output, Failure>) -> NotificationToken)
         where S: Subscriber,
         Failure == S.Failure,
         Output == S.Input {
-            let subscriber = AnySubscriber(subscriber)
-            self.subscriber = subscriber
-            self.token = handler(subscriber)
+            self.subscriber = AnySubscriber(subscriber)
+            self.initialValue = initialValue
+            self.handler = handler
     }
     
-    func request(_ demand: Subscribers.Demand) {}
+    func request(_ demand: Subscribers.Demand) {
+        if let subscriber = subscriber, token == nil {
+            token = handler(subscriber)
+            if let initialValue = initialValue {
+                _ = subscriber.receive(initialValue)
+            }
+        }
+    }
     
     func cancel() {
-        token.invalidate()
+        token?.invalidate()
         subscriber = nil
     }
 }
@@ -150,27 +161,25 @@ public enum RealmPublishers {
      - returns: `AnyPublisher<Output, Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<Results<Model>, Error>`, on a `List<User>` it will return `AnyPublisher<List<User>, Error>`, etc.
      */
     public static func collection<Output: NotificationEmitter>(from collection: Output,
-                                                        synchronousStart: Bool = true)
+                                                               synchronousStart: Bool = true)
         -> AnyPublisher<Output, Error> {
             
-        return RealmPublisher<Output, Error> { subscriber in
-            if synchronousStart {
-                _ = subscriber.receive(collection)
-            }
-            return collection.observe { changeset in
-                let value: Output
+            let initialValue: Output? = synchronousStart ? collection : nil
+            return RealmPublisher<Output, Error>(initialValue: initialValue) { subscriber in
+                return collection.observe { changeset in
+                    let value: Output
                 
-                switch changeset {
-                case let .initial(latestValue):
-                    guard !synchronousStart else { return }
-                    value = latestValue
-                case .update(let latestValue, _, _, _):
-                    value = latestValue
-                case let .error(error):
-                    subscriber.receive(completion: .failure(error))
-                    return
+                    switch changeset {
+                    case let .initial(latestValue):
+                        guard !synchronousStart else { return }
+                        value = latestValue
+                    case .update(let latestValue, _, _, _):
+                        value = latestValue
+                    case let .error(error):
+                        subscriber.receive(completion: .failure(error))
+                        return
                 }
-                _ = subscriber.receive(value)
+                    _ = subscriber.receive(value)
             }
         }
         .eraseToAnyPublisher()
@@ -209,28 +218,25 @@ public enum RealmPublishers {
      - returns: `AnyPublisher<(Output, RealmChangeset?), Error>`, e.g. when called on `Results<Model>` it will return `AnyPublisher<(Results<Model>, RealmChangeset?), Error>`, on a `List<User>` it will return `AnyPublisher<(List<User>, RealmChangeset?), Error>`, etc.
      */
     public static func changeset<Output: NotificationEmitter>(from collection: Output,
-                                                       synchronousStart: Bool = true)
+                                                              synchronousStart: Bool = true)
         -> AnyPublisher<(AnyRealmCollection<Output.ElementType>, RealmChangeset?), Error> {
             
-        return RealmPublisher<(AnyRealmCollection<Output.ElementType>, RealmChangeset?), Error> { subscriber in
-            if synchronousStart {
-                _ = subscriber.receive((collection.toAnyCollection(), nil))
-            }
-            
-            return collection.toAnyCollection().observe { changeset in
-                switch changeset {
-                case let .initial(value):
-                    guard !synchronousStart else { return }
-                    _ = subscriber.receive((value, nil))
-                case let .update(value, deletes, inserts, updates):
-                    _ = subscriber.receive((value, RealmChangeset(deleted: deletes, inserted: inserts, updated: updates)))
-                case let .error(error):
-                    subscriber.receive(completion: .failure(error))
-                    return
+            let initialValue: (AnyRealmCollection<Output.ElementType>, RealmChangeset?)? = synchronousStart ? (collection.toAnyCollection(), nil) : nil
+            return RealmPublisher<(AnyRealmCollection<Output.ElementType>, RealmChangeset?), Error>(initialValue: initialValue) { subscriber in
+                return collection.toAnyCollection().observe { changeset in
+                    switch changeset {
+                    case let .initial(value):
+                        guard !synchronousStart else { return }
+                        _ = subscriber.receive((value, nil))
+                    case let .update(value, deletes, inserts, updates):
+                        _ = subscriber.receive((value, RealmChangeset(deleted: deletes, inserted: inserts, updated: updates)))
+                    case let .error(error):
+                        subscriber.receive(completion: .failure(error))
+                        return
                 }
             }
         }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
     /**
@@ -294,27 +300,24 @@ public enum RealmPublishers {
                                 properties: [String]? = nil)
         -> AnyPublisher<O, Error> {
             
-        return RealmPublisher<O, Error> { subscriber in
-            if emitInitialValue {
-                _ = subscriber.receive(object)
-            }
-            
-            return object.observe { change in
-                switch change {
-                case let .change(changedProperties):
-                    if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
-                        // if change property isn't an observed one, just return
-                        return
+            let initialValue: O? = emitInitialValue ? object : nil
+            return RealmPublisher<O, Error>(initialValue: initialValue) { subscriber in
+                return object.observe { change in
+                    switch change {
+                    case let .change(changedProperties):
+                        if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
+                            // if change property isn't an observed one, just return
+                            return
+                        }
+                        _ = subscriber.receive(object)
+                    case .deleted:
+                        subscriber.receive(completion: .failure(CombineRealmError.objectDeleted))
+                    case let .error(error):
+                        subscriber.receive(completion: .failure(error))
                     }
-                    _ = subscriber.receive(object)
-                case .deleted:
-                    subscriber.receive(completion: .failure(CombineRealmError.objectDeleted))
-                case let .error(error):
-                    subscriber.receive(completion: .failure(error))
                 }
             }
-        }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
     /**

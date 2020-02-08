@@ -14,14 +14,11 @@ import RealmSwift
 class Delete<Input, Failure: Error>: Subscriber, Cancellable {
         
     public let combineIdentifier = CombineIdentifier()
-    
-    private let realm: Realm?
-    
+        
     private let onError: ((Swift.Error) -> Void)?
     private var subscription: Subscription?
     
-    init(realm: Realm?, onError: ((Swift.Error) -> Void)?) {
-        self.realm = realm
+    init(onError: ((Swift.Error) -> Void)?) {
         self.onError = onError
     }
     
@@ -29,10 +26,10 @@ class Delete<Input, Failure: Error>: Subscriber, Cancellable {
         self.subscription = subscription
         subscription.request(.unlimited)
     }
-    
+        
     func receive(_ input: Input) -> Subscribers.Demand {
         do {
-            let realm = try self.realm ?? Realm()
+            let realm = try realmInstance(from: input)
             try realm.write { [weak self] in
                 self?.deleteFromRealm(realm, input: input)
             }
@@ -40,6 +37,10 @@ class Delete<Input, Failure: Error>: Subscriber, Cancellable {
             onError?(error)
         }
         return .unlimited
+    }
+    
+    func realmInstance(from input: Input) throws -> Realm {
+        preconditionFailure("Subclasses must override this method")
     }
     
     func deleteFromRealm(_ realm: Realm, input: Input) {
@@ -57,12 +58,28 @@ class Delete<Input, Failure: Error>: Subscriber, Cancellable {
 }
 
 final class DeleteOne<Input: Object, Failure: Error>: Delete<Input, Failure> {
+    override func realmInstance(from input: Input) throws -> Realm {
+        guard let realm = input.realm else {
+            throw CombineRealmError.unknown
+        }
+        return realm
+    }
+
     override func deleteFromRealm(_ realm: Realm, input: Input) {
         realm.delete(input)
     }
 }
 
 final class DeleteMany<Input: Sequence, Failure: Error>: Delete<Input, Failure> where Input.Iterator.Element: Object {
+    override func realmInstance(from input: Input) throws -> Realm {
+        guard var generator = input.makeIterator() as Input.Iterator?,
+            let first = generator.next(),
+            let realm = first.realm else {
+                throw CombineRealmError.unknown
+        }
+        return realm
+    }
+    
     override func deleteFromRealm(_ realm: Realm, input: Input) {
         realm.delete(input)
     }
@@ -76,28 +93,17 @@ public extension Publisher where Output: Object, Failure: Error {
      - returns: `AnyCancellable`
      */
     func deleteFromRealm() -> AnyCancellable {
-        return deleteFromRealm(nil)
+        return deleteFromRealm(onError: nil)
     }
-    
+        
     /**
      Subscribes publisher to subscriber which deletes objects from a Realm.
 
-     - parameter realm - realm instance which contains the deletable objects (defaults to `Realm()` if not specified)
-     - returns: `AnyCancellable`
-     */
-    func deleteFromRealm(_ realm: Realm) -> AnyCancellable {
-        return deleteFromRealm(realm, onError: nil)
-    }
-    
-    /**
-     Subscribes publisher to subscriber which deletes objects from a Realm.
-
-     - parameter realm - realm instance which contains the deletable objects (defaults to `Realm()` if not specified)
      - parameter onError - closure to implement custom error handling
      - returns: `AnyCancellable`
      */
-    func deleteFromRealm(_ realm: Realm? = nil, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
-        let subscriber = DeleteOne<Output, Failure>(realm: realm, onError: onError)
+    func deleteFromRealm(onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
+        let subscriber = DeleteOne<Output, Failure>(onError: onError)
         self.subscribe(subscriber)
         return AnyCancellable(subscriber)
     }
@@ -111,28 +117,17 @@ public extension Publisher where Output: Sequence, Failure: Error, Output.Iterat
      - returns: `AnyCancellable`
      */
     func deleteFromRealm() -> AnyCancellable {
-        return deleteFromRealm(nil)
+        return deleteFromRealm(onError: nil)
     }
     
     /**
      Subscribes publisher to subscriber which deletes objects from a Realm.
 
-     - parameter realm - realm instance which contains the deletable objects (defaults to `Realm()` if not specified)
-     - returns: `AnyCancellable`
-     */
-    func deleteFromRealm(_ realm: Realm) -> AnyCancellable {
-        return deleteFromRealm(realm, onError: nil)
-    }
-    
-    /**
-     Subscribes publisher to subscriber which deletes objects from a Realm.
-
-     - parameter realm - realm instance which contains the deletable objects (defaults to `Realm()` if not specified)
      - parameter onError - closure to implement custom error handling
      - returns: `AnyCancellable`
      */
-    func deleteFromRealm(_ realm: Realm? = nil, onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
-        let subscriber = DeleteMany<Output, Failure>(realm: realm, onError: onError)
+    func deleteFromRealm(onError: ((Swift.Error) -> Void)? = nil) -> AnyCancellable {
+        let subscriber = DeleteMany<Output, Failure>(onError: onError)
         self.subscribe(subscriber)
         return AnyCancellable(subscriber)
     }

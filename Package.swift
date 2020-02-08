@@ -21,6 +21,12 @@ let package = Package(
             name: "CombineRealm",
             dependencies: ["Realm", "RealmSwift"],
             path: "Sources"
+        ),
+        .testTarget(
+            name: "CombineRealmTests",
+            dependencies: ["CombineRealm"],
+            path: "Tests"
         )
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
