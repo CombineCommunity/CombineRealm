@@ -2,7 +2,6 @@
 
 ![CombineRealm Logo](CombineRealm.png)
 
-[![Travis CI](https://travis-ci.com/istvan-kreisz/CombineRealm.svg?branch=master)](https://travis-ci.org/istvan-kreisz/CombineRealm)
 [![Version](https://img.shields.io/cocoapods/v/Combine-Realm.svg?style=flat)](http://cocoapods.org/pods/Combine-Realm)
 [![License](https://img.shields.io/cocoapods/l/Combine-Realm.svg?style=flat)](http://cocoapods.org/pods/Combine-Realm)
 ![Platform](https://img.shields.io/badge/platforms-iOS%2013%20&%20macOS%2010.15%20&%20tvOS%2013%20&%20watchOS%206-success.svg)
