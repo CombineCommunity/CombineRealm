@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D02516723F217F500CB304A /* CombineRealmResultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02515F23F217F500CB304A /* CombineRealmResultsTests.swift */; };
+		5D02516823F217F500CB304A /* CombineRealmObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516023F217F500CB304A /* CombineRealmObjectTests.swift */; };
+		5D02516923F217F500CB304A /* CombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516123F217F500CB304A /* CombineTests.swift */; };
+		5D02516A23F217F500CB304A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516223F217F500CB304A /* Models.swift */; };
+		5D02516B23F217F500CB304A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516323F217F500CB304A /* Utilities.swift */; };
+		5D02516C23F217F500CB304A /* CombineRealmLinkingObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516423F217F500CB304A /* CombineRealmLinkingObjectTests.swift */; };
+		5D02516D23F217F500CB304A /* CombineRealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516523F217F500CB304A /* CombineRealmTests.swift */; };
+		5D02516E23F217F500CB304A /* CombineRealmListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D02516623F217F500CB304A /* CombineRealmListTests.swift */; };
 		5D6C5C4423ECA6BD00853061 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4323ECA6BD00853061 /* AppDelegate.swift */; };
 		5D6C5C4623ECA6BD00853061 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4523ECA6BD00853061 /* SceneDelegate.swift */; };
 		5D6C5C4823ECA6BD00853061 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4723ECA6BD00853061 /* ViewController.swift */; };
@@ -17,7 +25,28 @@
 		5D6C5C6723ECD1A800853061 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C6623ECD1A800853061 /* Models.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5D02515923F217C000CB304A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D6C5C3823ECA6BD00853061 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D6C5C3F23ECA6BD00853061;
+			remoteInfo = Example;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		5D02515423F217C000CB304A /* CombineRealmTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineRealmTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D02515823F217C000CB304A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D02515E23F217F400CB304A /* CombineRealmTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CombineRealmTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		5D02515F23F217F500CB304A /* CombineRealmResultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineRealmResultsTests.swift; path = ../../Tests/CombineRealmTests/CombineRealmResultsTests.swift; sourceTree = "<group>"; };
+		5D02516023F217F500CB304A /* CombineRealmObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineRealmObjectTests.swift; path = ../../Tests/CombineRealmTests/CombineRealmObjectTests.swift; sourceTree = "<group>"; };
+		5D02516123F217F500CB304A /* CombineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineTests.swift; path = ../../Tests/CombineRealmTests/CombineTests.swift; sourceTree = "<group>"; };
+		5D02516223F217F500CB304A /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Models.swift; path = ../../Tests/CombineRealmTests/Models.swift; sourceTree = "<group>"; };
+		5D02516323F217F500CB304A /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../../Tests/CombineRealmTests/Utilities.swift; sourceTree = "<group>"; };
+		5D02516423F217F500CB304A /* CombineRealmLinkingObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineRealmLinkingObjectTests.swift; path = ../../Tests/CombineRealmTests/CombineRealmLinkingObjectTests.swift; sourceTree = "<group>"; };
+		5D02516523F217F500CB304A /* CombineRealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineRealmTests.swift; path = ../../Tests/CombineRealmTests/CombineRealmTests.swift; sourceTree = "<group>"; };
+		5D02516623F217F500CB304A /* CombineRealmListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CombineRealmListTests.swift; path = ../../Tests/CombineRealmTests/CombineRealmListTests.swift; sourceTree = "<group>"; };
 		5D6C5C4023ECA6BD00853061 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6C5C4323ECA6BD00853061 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D6C5C4523ECA6BD00853061 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +59,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5D02515123F217C000CB304A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D6C5C3D23ECA6BD00853061 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,10 +77,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D02515523F217C000CB304A /* CombineRealmTest */ = {
+			isa = PBXGroup;
+			children = (
+				5D02516423F217F500CB304A /* CombineRealmLinkingObjectTests.swift */,
+				5D02516623F217F500CB304A /* CombineRealmListTests.swift */,
+				5D02516023F217F500CB304A /* CombineRealmObjectTests.swift */,
+				5D02515F23F217F500CB304A /* CombineRealmResultsTests.swift */,
+				5D02516523F217F500CB304A /* CombineRealmTests.swift */,
+				5D02516123F217F500CB304A /* CombineTests.swift */,
+				5D02516223F217F500CB304A /* Models.swift */,
+				5D02516323F217F500CB304A /* Utilities.swift */,
+				5D02515823F217C000CB304A /* Info.plist */,
+				5D02515E23F217F400CB304A /* CombineRealmTest-Bridging-Header.h */,
+			);
+			path = CombineRealmTest;
+			sourceTree = "<group>";
+		};
 		5D6C5C3723ECA6BD00853061 = {
 			isa = PBXGroup;
 			children = (
 				5D6C5C4223ECA6BD00853061 /* Example */,
+				5D02515523F217C000CB304A /* CombineRealmTest */,
 				5D6C5C4123ECA6BD00853061 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				5D6C5C4023ECA6BD00853061 /* Example.app */,
+				5D02515423F217C000CB304A /* CombineRealmTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +130,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5D02515323F217C000CB304A /* CombineRealmTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D02515D23F217C000CB304A /* Build configuration list for PBXNativeTarget "CombineRealmTest" */;
+			buildPhases = (
+				5D02515023F217C000CB304A /* Sources */,
+				5D02515123F217C000CB304A /* Frameworks */,
+				5D02515223F217C000CB304A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D02515A23F217C000CB304A /* PBXTargetDependency */,
+			);
+			name = CombineRealmTest;
+			productName = CombineRealmTest;
+			productReference = 5D02515423F217C000CB304A /* CombineRealmTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5D6C5C3F23ECA6BD00853061 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D6C5C5423ECA6BE00853061 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -105,6 +178,11 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "István Kreisz";
 				TargetAttributes = {
+					5D02515323F217C000CB304A = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
+						TestTargetID = 5D6C5C3F23ECA6BD00853061;
+					};
 					5D6C5C3F23ECA6BD00853061 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -127,11 +205,19 @@
 			projectRoot = "";
 			targets = (
 				5D6C5C3F23ECA6BD00853061 /* Example */,
+				5D02515323F217C000CB304A /* CombineRealmTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5D02515223F217C000CB304A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D6C5C3E23ECA6BD00853061 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,6 +231,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5D02515023F217C000CB304A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D02516923F217F500CB304A /* CombineTests.swift in Sources */,
+				5D02516C23F217F500CB304A /* CombineRealmLinkingObjectTests.swift in Sources */,
+				5D02516823F217F500CB304A /* CombineRealmObjectTests.swift in Sources */,
+				5D02516E23F217F500CB304A /* CombineRealmListTests.swift in Sources */,
+				5D02516723F217F500CB304A /* CombineRealmResultsTests.swift in Sources */,
+				5D02516D23F217F500CB304A /* CombineRealmTests.swift in Sources */,
+				5D02516B23F217F500CB304A /* Utilities.swift in Sources */,
+				5D02516A23F217F500CB304A /* Models.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D6C5C3C23ECA6BD00853061 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,6 +258,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D02515A23F217C000CB304A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D6C5C3F23ECA6BD00853061 /* Example */;
+			targetProxy = 5D02515923F217C000CB304A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5D6C5C4923ECA6BD00853061 /* Main.storyboard */ = {
@@ -178,6 +287,51 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5D02515B23F217C000CB304A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TA366CU42K;
+				INFOPLIST_FILE = CombineRealmTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = istvankreisz.CombineRealmTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CombineRealmTest/CombineRealmTest-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
+			};
+			name = Debug;
+		};
+		5D02515C23F217C000CB304A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TA366CU42K;
+				INFOPLIST_FILE = CombineRealmTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = istvankreisz.CombineRealmTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CombineRealmTest/CombineRealmTest-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
+			};
+			name = Release;
+		};
 		5D6C5C5223ECA6BE00853061 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -331,6 +485,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5D02515D23F217C000CB304A /* Build configuration list for PBXNativeTarget "CombineRealmTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D02515B23F217C000CB304A /* Debug */,
+				5D02515C23F217C000CB304A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5D6C5C3B23ECA6BD00853061 /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

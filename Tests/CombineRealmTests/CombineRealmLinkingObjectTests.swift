@@ -7,8 +7,8 @@
 //
 
 @testable import CombineRealm
-import RealmSwift
 import Combine
+import RealmSwift
 import XCTest
 
 

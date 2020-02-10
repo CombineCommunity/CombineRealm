@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = "Combine-Realm"
-  s.version          = "0.1.0"
+  s.version          = "1.0.0"
   s.summary          = "A Combine wrapper of Realm's notifications and write bindings"
 
   s.description      = <<-DESC
