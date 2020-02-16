@@ -3,7 +3,7 @@
 //  CombineTests
 //
 //  Created by István Kreisz on 07/02/2020.
-//  Copyright © 2020 István Kreisz. All rights reserved.
+//  Copyright (c) Combine Community. All rights reserved.
 //
 
 @testable import CombineRealm

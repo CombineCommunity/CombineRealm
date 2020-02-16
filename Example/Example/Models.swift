@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by István Kreisz on 06/02/2020.
-//  Copyright © 2020 István Kreisz. All rights reserved.
+//  Copyright (c) Combine Community. All rights reserved.
 //
 
 import UIKit
