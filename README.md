@@ -242,6 +242,12 @@ import Combine_Realm
 - In Xcode select `File/Swift Packages/Add Package Dependency...`
 - Paste `https://github.com/istvan-kreisz/CombineRealm.git` into the repository URL textfield.
 
+### Future ideas
+
+- Add CI tests
+- Add Carthage support
+- Your ideas?
+
 ## Author
 
 __Istvan Kreisz__

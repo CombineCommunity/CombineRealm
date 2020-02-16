@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.homepage         = "https://github.com/istvan-kreisz/CombineRealm.git"
   s.license          = 'MIT'
-  s.author           = { "Istvan Kreisz" => "kreiszdev@gmail.com" }
+  s.author           = { "Istvan Kreisz" => "kreiszdev@gmail.com", "Combine Community" => "cocoapods@combine.community" }
   s.source           = { :git => "https://github.com/istvan-kreisz/CombineRealm.git", :tag => s.version.to_s }
   s.source_files     = 'Sources/CombineRealm/*'
 
