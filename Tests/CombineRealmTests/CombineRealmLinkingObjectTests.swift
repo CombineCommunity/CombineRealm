@@ -28,12 +28,12 @@ class CombineRealmLinkingObjectTests: XCTestCase {
         var results = [Int]()
         let exp = expectation(description: "")
         let configuration = realm.configuration
-
+        
         let message = Message("first")
         try! realm.write {
             realm.add(message)
         }
-        
+                
         RealmPublishers.array(from: message.mentions)
             .map { $0.count }
             .prefix(3)
@@ -43,14 +43,14 @@ class CombineRealmLinkingObjectTests: XCTestCase {
                 results.append($0)
             })
             .store(in: &subscriptions)
-
+        
         let user1 = User("user1")
         user1.lastMessage = message
-
-            try! realm.write {
-                realm.add(user1)
-            }
-
+        
+        try! realm.write {
+            realm.add(user1)
+        }
+        
         DispatchQueue.global(qos: .background).sync {
             let realm = try! Realm(configuration: configuration)
             let user1 = realm.objects(User.self).first!
@@ -59,18 +59,18 @@ class CombineRealmLinkingObjectTests: XCTestCase {
             }
         }
         
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 10)
         
         XCTAssertEqual(results[0], 0)
         XCTAssertEqual(results[1], 1)
         XCTAssertEqual(results[2], 0)
     }
-
+    
     func testLinkingObjectsTypeChangeset() {
         var results = [String]()
         let exp = expectation(description: "")
         let configuration = realm.configuration
-
+        
         let message = Message("first")
         try! realm.write {
             realm.add(message)
@@ -85,14 +85,14 @@ class CombineRealmLinkingObjectTests: XCTestCase {
                 results.append($0)
             })
             .store(in: &subscriptions)
-
+        
         let user1 = User("user1")
         user1.lastMessage = message
-
-            try! realm.write {
-                realm.add(user1)
-            }
-
+        
+        try! realm.write {
+            realm.add(user1)
+        }
+        
         DispatchQueue.global(qos: .background).sync {
             let realm = try! Realm(configuration: configuration)
             let user1 = realm.objects(User.self).first!

@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D450BD824F29021004A2648 /* CombineRealm in Frameworks */ = {isa = PBXBuildFile; productRef = 5D450BD724F29021004A2648 /* CombineRealm */; };
 		5D6C5C4423ECA6BD00853061 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4323ECA6BD00853061 /* AppDelegate.swift */; };
 		5D6C5C4623ECA6BD00853061 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4523ECA6BD00853061 /* SceneDelegate.swift */; };
 		5D6C5C4823ECA6BD00853061 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4723ECA6BD00853061 /* ViewController.swift */; };
 		5D6C5C4B23ECA6BD00853061 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4923ECA6BD00853061 /* Main.storyboard */; };
 		5D6C5C4D23ECA6BE00853061 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4C23ECA6BE00853061 /* Assets.xcassets */; };
 		5D6C5C5023ECA6BE00853061 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D6C5C4E23ECA6BE00853061 /* LaunchScreen.storyboard */; };
-		5D6C5C6523ECC2A600853061 /* CombineRealm in Frameworks */ = {isa = PBXBuildFile; productRef = 5D6C5C6423ECC2A600853061 /* CombineRealm */; };
 		5D6C5C6723ECD1A800853061 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6C5C6623ECD1A800853061 /* Models.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D6C5C6523ECC2A600853061 /* CombineRealm in Frameworks */,
+				5D450BD824F29021004A2648 /* CombineRealm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				5D6C5C6423ECC2A600853061 /* CombineRealm */,
+				5D450BD724F29021004A2648 /* CombineRealm */,
 			);
 			productName = Example;
 			productReference = 5D6C5C4023ECA6BD00853061 /* Example.app */;
@@ -148,7 +148,7 @@
 			);
 			mainGroup = 5D6C5C3723ECA6BD00853061;
 			packageReferences = (
-				5D6C5C6323ECC2A600853061 /* XCRemoteSwiftPackageReference "CombineRealm" */,
+				5D450BD624F29020004A2648 /* XCRemoteSwiftPackageReference "CombineRealm" */,
 			);
 			productRefGroup = 5D6C5C4123ECA6BD00853061 /* Products */;
 			projectDirPath = "";
@@ -380,20 +380,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5D6C5C6323ECC2A600853061 /* XCRemoteSwiftPackageReference "CombineRealm" */ = {
+		5D450BD624F29020004A2648 /* XCRemoteSwiftPackageReference "CombineRealm" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/istvan-kreisz/CombineRealm.git";
+			repositoryURL = "https://github.com/CombineCommunity/CombineRealm.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5D6C5C6423ECC2A600853061 /* CombineRealm */ = {
+		5D450BD724F29021004A2648 /* CombineRealm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5D6C5C6323ECC2A600853061 /* XCRemoteSwiftPackageReference "CombineRealm" */;
+			package = 5D450BD624F29020004A2648 /* XCRemoteSwiftPackageReference "CombineRealm" */;
 			productName = CombineRealm;
 		};
 /* End XCSwiftPackageProductDependency section */

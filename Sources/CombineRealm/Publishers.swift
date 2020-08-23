@@ -33,7 +33,7 @@ public protocol NotificationEmitter {
      
      - returns: `NotificationToken` - retain this value to keep notifications being emitted for the current collection.
      */
-    func observe(_ block: @escaping (RealmCollectionChange<Self>) -> Void) -> NotificationToken
+    func observe(on queue: DispatchQueue?, _ block: @escaping (RealmCollectionChange<Self>) -> Void) -> NotificationToken
     
     func toArray() -> [ElementType]
     
@@ -41,10 +41,11 @@ public protocol NotificationEmitter {
 }
 
 extension List: NotificationEmitter {
+    
     public func toAnyCollection() -> AnyRealmCollection<Element> {
         return AnyRealmCollection<Element>(self)
     }
-    
+        
     public typealias ElementType = Element
     public func toArray() -> [Element] {
         return Array(self)
@@ -166,7 +167,7 @@ public enum RealmPublishers {
             
             let initialValue: Output? = synchronousStart ? collection : nil
             return RealmPublisher<Output, Error>(initialValue: initialValue) { subscriber in
-                return collection.observe { changeset in
+                return collection.observe(on: nil) { changeset in
                     let value: Output
                 
                     switch changeset {
@@ -223,7 +224,7 @@ public enum RealmPublishers {
             
             let initialValue: (AnyRealmCollection<Output.ElementType>, RealmChangeset?)? = synchronousStart ? (collection.toAnyCollection(), nil) : nil
             return RealmPublisher<(AnyRealmCollection<Output.ElementType>, RealmChangeset?), Error>(initialValue: initialValue) { subscriber in
-                return collection.toAnyCollection().observe { changeset in
+                return collection.toAnyCollection().observe(on: nil) { changeset in
                     switch changeset {
                     case let .initial(value):
                         guard !synchronousStart else { return }
@@ -302,10 +303,10 @@ public enum RealmPublishers {
             
             let initialValue: O? = emitInitialValue ? object : nil
             return RealmPublisher<O, Error>(initialValue: initialValue) { subscriber in
-                return object.observe { change in
+                return object.observe(on: nil) { change in
                     switch change {
-                    case let .change(changedProperties):
-                        if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
+                    case let .change(_, changedProperties):
+                        if let properties = properties, !changedProperties.contains(where: { return properties.contains($0.name) }) {
                             // if change property isn't an observed one, just return
                             return
                         }
@@ -330,9 +331,9 @@ public enum RealmPublishers {
     public static func propertyChanges<O: Object>(object: O) -> AnyPublisher<PropertyChange, Error> {
         
         return RealmPublisher<PropertyChange, Error> { subscriber in
-            return object.observe { change in
+            return object.observe(on: nil) { change in
                 switch change {
-                case let .change(changes):
+                case let .change(_, changes):
                     for change in changes {
                         _ = subscriber.receive(change)
                     }
